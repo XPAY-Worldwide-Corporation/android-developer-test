@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="sub_header_text_size">20sp</dimen>
+    <dimen name="normal_text_size">17sp</dimen>
+</resources>
