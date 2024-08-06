@@ -16,20 +16,21 @@ class PokemonViewModel @Inject constructor(private val repository: PokemonReposi
     var disposable: Disposable? = null
 
     val allPokemonList : MutableLiveData<MutableList<PokemonEnity>> = MutableLiveData()
-    val pokemonList : MutableLiveData<MutableList<PokemonEnity>> = MutableLiveData()
+    val pokemonListDisplayed : MutableLiveData<MutableList<PokemonEnity>> = MutableLiveData()
     private val filteredPokemonList : MutableLiveData<MutableList<PokemonEnity>> = MutableLiveData()
 //    var offset = 0
 //    var hasNextItems = true
+    val isShowNoResult = MutableLiveData<Boolean>()
 
 
     override fun start() {
+        isShowNoResult.value = false
         allPokemonList.value = arrayListOf()
         getPokemonList()
     }
 
-//    @SuppressLint("CheckResult")
-@SuppressLint("CheckResult")
-fun getPokemonList() {
+    @SuppressLint("CheckResult")
+    fun getPokemonList() {
         disposable = repository.getPokemonList(0, 1500)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -59,7 +60,7 @@ fun getPokemonList() {
             pokemon.name.contains(query, ignoreCase = true)
         }?.toMutableList()
 
-        pokemonList.value = filteredPokemonList.value
+        pokemonListDisplayed.value = filteredPokemonList.value
     }
 
     public override fun onCleared() {

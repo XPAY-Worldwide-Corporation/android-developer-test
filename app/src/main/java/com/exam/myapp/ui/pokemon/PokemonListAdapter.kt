@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.exam.myapp.data.local.room.PokemonEnity
 import com.exam.myapp.databinding.ItemPokemonBinding
 
-class PokemonListAdapter : RecyclerView.Adapter<PokemonListAdapter.PokemonViewHolder>(){
+class PokemonListAdapter(private val onClick: (PokemonEnity) -> Unit) : RecyclerView.Adapter<PokemonListAdapter.PokemonViewHolder>(){
 
     private lateinit var pokemonList: List<PokemonEnity>
 
@@ -29,10 +29,10 @@ class PokemonListAdapter : RecyclerView.Adapter<PokemonListAdapter.PokemonViewHo
         notifyDataSetChanged()
     }
 
-    class PokemonViewHolder(val binding: ItemPokemonBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class PokemonViewHolder(val binding: ItemPokemonBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(pokemon: PokemonEnity) {
             binding.pokemon = pokemon
-            itemView.setOnClickListener {  }
+            itemView.setOnClickListener { onClick(pokemon) }
 
             binding.executePendingBindings()
         }

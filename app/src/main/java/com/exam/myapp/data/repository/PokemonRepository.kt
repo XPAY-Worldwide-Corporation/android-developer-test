@@ -21,7 +21,7 @@ class PokemonRepository @Inject constructor(
     }
 
     override fun saveAllPokemonToLocal(data: List<PokemonEnity>) {
-        return localDataSource.saveAllPokemonToLocal(data)
+        localDataSource.saveAllPokemonToLocal(data)
     }
 
     fun getPokemonListFromLocal(): Single<List<PokemonEnity>> {

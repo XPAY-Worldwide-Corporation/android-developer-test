@@ -1,6 +1,7 @@
 package com.exam.myapp.di.module
 
 import com.exam.myapp.data.remote.PokemonApi
+import com.exam.myapp.data.remote.PokemonDetailApi
 import com.exam.myapp.di.interceptor.NetworkConnectionInterceptor
 import dagger.Module
 import dagger.Provides
@@ -41,6 +42,10 @@ class NetworkModule {
     @Provides
     @Singleton
     fun providePokemonApi(retrofit: Retrofit): PokemonApi = retrofit.create(PokemonApi::class.java)
+
+    @Provides
+    @Singleton
+    fun providePokemonDetailApi(retrofit: Retrofit): PokemonDetailApi = retrofit.create(PokemonDetailApi::class.java)
 
 
 }

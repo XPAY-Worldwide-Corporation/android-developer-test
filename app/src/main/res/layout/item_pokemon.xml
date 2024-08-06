@@ -12,9 +12,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="12dp"
+        app:cardCornerRadius="10dp"
         android:layout_margin="8dp"
-        app:cardElevation="2dp">
+        app:cardElevation="4dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,18 +27,21 @@
                 android:id="@+id/imgPokemon"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                app:imageUrl="@{pokemon.imgUrl}"
-                android:src="@drawable/ic_launcher_background" />
+                android:scaleType="fitXY"
+                tools:src="@mipmap/pokemon_placeholder"
+                app:imageUrl="@{pokemon.imgUrl}"/>
 
             <TextView
                 android:id="@+id/pokemonName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="@{pokemon.name}"
+                android:text="@{pokemon.nameString}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/normal_text_size"
                 android:textStyle="bold"
+                android:shadowRadius="4"
+                android:shadowColor="@color/white"
                 tools:text="Pokemon" />
 
         </LinearLayout>

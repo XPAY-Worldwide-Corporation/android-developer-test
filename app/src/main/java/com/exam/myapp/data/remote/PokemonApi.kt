@@ -13,6 +13,4 @@ interface PokemonApi {
         @Query("offset") offset: Int,
         @Query("limit") limit: Int) : Single<PokemonResponse>
 
-    @GET("pokemon/{name}")
-    fun getPokemonDetails(@Path("name") name: String) : Call<PokemonResponse>
 }

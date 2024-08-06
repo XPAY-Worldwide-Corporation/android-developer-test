@@ -14,4 +14,6 @@ data class PokemonEnity (
 ){
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
+
+    fun getNameString(): String = name.replaceFirstChar { it.uppercase() }
 }

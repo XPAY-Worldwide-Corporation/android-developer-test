@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.exam.myapp.di.ViewModelKey
 import com.exam.myapp.ui.pokemon.PokemonViewModel
+import com.exam.myapp.ui.pokemon_detail.PokemonDetailViewModel
 import com.exam.myapp.util.ViewModelFactory
 import dagger.Binds
 import dagger.Module
@@ -24,5 +25,9 @@ abstract class ViewModelModule {
     @ViewModelKey(PokemonViewModel::class)
     abstract fun bindPokemonViewModel(viewModel: PokemonViewModel): ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(PokemonDetailViewModel::class)
+    abstract fun bindPokemonDetailViewModel(viewModel: PokemonDetailViewModel): ViewModel
 
 }

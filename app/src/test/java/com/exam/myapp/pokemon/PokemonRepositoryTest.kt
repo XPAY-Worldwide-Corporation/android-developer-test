@@ -50,13 +50,13 @@ class PokemonRepositoryTest {
         verify(localDataSource, never()).saveAllPokemonToLocal(any())
     }
 
-//    @Test
-//    fun `saveAllPokemonToLocal should save data to local `() {
-//        val pokemonList = createMockResponse()
-//        repository.saveAllPokemonToLocal(pokemonList)
-//
-//        verify(localDataSource).saveAllPokemonToLocal(pokemonList)
-//    }
+    @Test
+    fun `saveAllPokemonToLocal should save data to local `() {
+        val pokemonList = createMockResponse()
+        repository.saveAllPokemonToLocal(pokemonList)
+
+        verify(localDataSource).saveAllPokemonToLocal(pokemonList)
+    }
 
     @Test
     fun `getPokemonListFromLocal should return list from local db`() {

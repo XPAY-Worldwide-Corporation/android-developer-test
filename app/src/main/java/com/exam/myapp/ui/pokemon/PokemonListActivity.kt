@@ -1,15 +1,21 @@
 package com.exam.myapp.ui.pokemon
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.exam.myapp.data.local.room.PokemonEnity
 import com.exam.myapp.databinding.ActivityMainBinding
+import com.exam.myapp.ui.pokemon_detail.PokemonDetailActivity
 import com.exam.myapp.util.DialogHelper
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
+
 
 class PokemonListActivity: DaggerAppCompatActivity()  {
 
@@ -23,21 +29,24 @@ class PokemonListActivity: DaggerAppCompatActivity()  {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.lifecycleOwner = this
 
         viewModel = ViewModelProvider(this, viewModelFactory)[PokemonViewModel::class.java]
+        binding.viewModel = viewModel
         viewModel.start()
 
-        val adapter = PokemonListAdapter()
+        val adapter = PokemonListAdapter { pokemon -> onPokemonClicked(pokemon) }
 //        binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
 
         binding.recyclerView.adapter = adapter
 
         viewModel.allPokemonList.observe(this) { pokemon ->
-            viewModel.pokemonList.value = pokemon
+            viewModel.pokemonListDisplayed.value = pokemon
         }
 
-        viewModel.pokemonList.observe(this) { pokemon ->
+        viewModel.pokemonListDisplayed.observe(this) { pokemon ->
+            viewModel.isShowNoResult.value = pokemon.isEmpty()
             adapter.updatePokemonList(pokemon)
             binding.progressBar.visibility = View.GONE
             binding.swiperefresh.isRefreshing = false
@@ -86,7 +95,7 @@ class PokemonListActivity: DaggerAppCompatActivity()  {
                 if (!newText.isNullOrEmpty()) {
                     viewModel.searchPokemons(newText)
                 } else {
-                    viewModel.pokemonList.postValue(viewModel.allPokemonList.value)
+                    viewModel.pokemonListDisplayed.postValue(viewModel.allPokemonList.value)
                 }
                 return true
             }
@@ -94,9 +103,31 @@ class PokemonListActivity: DaggerAppCompatActivity()  {
 
     }
 
+    private fun onPokemonClicked(pokemon: PokemonEnity) {
+        val intent = Intent(this, PokemonDetailActivity::class.java).apply {
+            putExtra("POKEMON_NAME", pokemon.name)
+        }
+
+        startActivity(intent)
+    }
+
     public override fun onDestroy() {
         super.onDestroy()
         DialogHelper.dismissProgressDialog()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        hideKeyboard()
+    }
+
+    private fun hideKeyboard() {
+        val view = this.currentFocus
+        if (view != null) {
+            view.clearFocus()
+//            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+//            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 
 }

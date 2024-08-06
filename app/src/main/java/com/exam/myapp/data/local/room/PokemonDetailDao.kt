@@ -7,11 +7,12 @@ import androidx.room.Query
 import io.reactivex.rxjava3.core.Single
 
 @Dao
-interface  PokemonDao {
-    @Query("SELECT * FROM `pokemon`")
-    fun getPokemonList(): Single<List<PokemonEnity>>
+interface  PokemonDetailDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllPokemon(pokemon: List<PokemonEnity>)
+    fun insertPokemonDetail(pokemonDetail: PokemonDetailEntity)
+
+    @Query("SELECT * FROM pokemon_detail WHERE name = :name")
+    fun getPokemonDetail(name: String): Single<PokemonDetailEntity>
 
 }

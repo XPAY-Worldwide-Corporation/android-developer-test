@@ -5,5 +5,5 @@ import java.io.Serializable
 data class PokemonResponse(
     val count: Int,
     val next: String?,
-    val results: List<PokemonResult>
+    val results: List<Pokemon>
 ): Serializable

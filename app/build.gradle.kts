@@ -86,5 +86,10 @@ dependencies {
     implementation(libs.lifecycle.extensions)
     implementation(libs.lifecycle.compiler)
 
+    implementation("androidx.palette:palette:1.0.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
+
+
+
 
 }

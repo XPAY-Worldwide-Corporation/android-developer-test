@@ -30,6 +30,7 @@ class PokemonViewModelTest {
     private val observerAllPokemonList: Observer<MutableList<PokemonEnity>> = mock<Observer<MutableList<PokemonEnity>>>()
     private val observerPokemonList: Observer<MutableList<PokemonEnity>> = mock<Observer<MutableList<PokemonEnity>>>()
     private val observerErrorMessage: Observer<String> = mock<Observer<String>>()
+    private val observerIsShowNoResult: Observer<Boolean> = mock<Observer<Boolean>>()
 
     @Before
     fun setUp() {
@@ -37,8 +38,9 @@ class PokemonViewModelTest {
         viewModel = PokemonViewModel(repository)
 
         viewModel.allPokemonList.observeForever(observerAllPokemonList)
-        viewModel.pokemonList.observeForever(observerPokemonList)
+        viewModel.pokemonListDisplayed.observeForever(observerPokemonList)
         viewModel.errorMessage.observeForever(observerErrorMessage)
+        viewModel.isShowNoResult.observeForever(observerIsShowNoResult)
 
         //Schedulers.trampoline() executes the tasks on the current thread synchronously.
         RxAndroidPlugins.setInitMainThreadSchedulerHandler{ Schedulers.trampoline() }
@@ -53,14 +55,15 @@ class PokemonViewModelTest {
     }
 
     @Test
-    fun `test start method`() {
+    fun `start method should call getPokemonList and initialize value of allPokomenList and set isShowNoResult to false`() {
         val mockResp = createMockResponse()
         whenever(repository.getPokemonList(0, 1500)).thenReturn(Single.just(mockResp))
 
         viewModel.start()
 
-        verify(observerAllPokemonList).onChanged(mockResp.toMutableList())
-        assertEquals(mockResp, viewModel.allPokemonList.value)
+        verify(observerAllPokemonList).onChanged(arrayListOf())
+        verify(observerIsShowNoResult).onChanged(false)
+        verify(repository).getPokemonList(0, 1500)
     }
 
     @Test
@@ -87,26 +90,26 @@ class PokemonViewModelTest {
     }
 
     @Test
-    fun `searchPokemon with result`() {
+    fun `searchPokemon with result should update pokemonListDisplayed`() {
         val mockResp = createMockResponse()
         viewModel.allPokemonList.postValue(mockResp.toMutableList())
         viewModel.searchPokemons("pik")
 
-        assert(viewModel.pokemonList.value == mockResp)
+        assertEquals(mockResp, viewModel.pokemonListDisplayed.value)
     }
 
     @Test
-    fun `searchPokemon with no result`() {
+    fun `searchPokemon with no result should update pokemonListDisplayed to empty`() {
         val mockResp = createMockResponse()
         viewModel.allPokemonList.postValue(mockResp.toMutableList())
 
         viewModel.searchPokemons("abc")
 
-        assert(viewModel.pokemonList.value?.isEmpty() == true)
+        assertEquals(true, viewModel.pokemonListDisplayed.value?.isEmpty())
     }
 
     @Test
-    fun `test onCleared dispose disposable`() {
+    fun `onCleared should dispose the Disposable`() {
         val disposable =  mock<Disposable>()
         viewModel.disposable = disposable
         whenever(disposable.isDisposed).thenReturn(false)
