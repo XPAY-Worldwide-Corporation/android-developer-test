@@ -40,7 +40,7 @@ class PokemonRepositoryTest {
     }
 
     @Test
-    fun `getPokemonList do nothing on error`() {
+    fun `getPokemonList should return throwable on error`() {
         whenever(remoteDataSource.getPokemonList(0, 1500)).thenReturn(Single.error(Throwable("error")))
 
         repository.getPokemonList(0, 1500)
@@ -51,7 +51,7 @@ class PokemonRepositoryTest {
     }
 
     @Test
-    fun `saveAllPokemonToLocal should save data to local `() {
+    fun `saveAllPokemonToLocal should save data to local`() {
         val pokemonList = createMockResponse()
         repository.saveAllPokemonToLocal(pokemonList)
 
@@ -59,7 +59,7 @@ class PokemonRepositoryTest {
     }
 
     @Test
-    fun `getPokemonListFromLocal should return list from local db`() {
+    fun `getPokemonListFromLocal should fetch data from local`() {
         val pokemonList = createMockResponse()
         whenever(localDataSource.getPokemonList(0, 1500)).thenReturn(Single.just(pokemonList))
 

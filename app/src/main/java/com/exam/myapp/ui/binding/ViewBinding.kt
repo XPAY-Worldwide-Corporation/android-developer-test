@@ -1,9 +1,11 @@
 package com.exam.myapp.ui.binding
 
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.view.View
+import android.widget.ProgressBar
 import androidx.databinding.BindingAdapter
 import androidx.palette.graphics.Palette
 import com.bumptech.glide.Glide
@@ -12,6 +14,13 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 
 object ViewBinding {
+
+    @JvmStatic
+    @BindingAdapter("progressBarColor")
+    fun setProgressBarColor(view: ProgressBar, color: Int) {
+        val colorStateList = ColorStateList.valueOf(color)
+        view.progressDrawable.setTintList(colorStateList)
+    }
 
     @JvmStatic
     @BindingAdapter("backgroundPalette")

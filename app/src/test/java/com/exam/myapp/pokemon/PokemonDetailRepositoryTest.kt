@@ -7,7 +7,9 @@ import com.exam.myapp.data.repository.PokemonDetailRepository
 import io.reactivex.rxjava3.core.Single
 import org.junit.Before
 import org.junit.Test
+import org.mockito.kotlin.any
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.never
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
@@ -25,7 +27,7 @@ class PokemonDetailRepositoryTest {
     }
 
     @Test
-    fun `getPokemonDetail should fetch from remote and save to local`() {
+    fun `getPokemonDetail should fetch from remote and save to local on success`() {
         val name = "pikachu"
         val entity = createPokemonDetailMock(name)
         whenever(remoteDataSource.getPokemonDetail(name)).thenReturn(Single.just(entity))
@@ -39,6 +41,17 @@ class PokemonDetailRepositoryTest {
     }
 
     @Test
+    fun `getPokemonDetail should return throwable on error`() {
+        whenever(remoteDataSource.getPokemonDetail("pikachu")).thenReturn(Single.error(Throwable("error")))
+
+        repository.getPokemonDetail("pikachu")
+            .test()
+            .assertError { it.message == "error" }
+
+        verify(localDataSource, never()).savePokemonDetailToLocal(any())
+    }
+
+    @Test
     fun `savePokemonDetailToLocal should save data to local`() {
         val name = "pikachu"
         val entity = createPokemonDetailMock(name)
@@ -48,7 +61,7 @@ class PokemonDetailRepositoryTest {
     }
 
     @Test
-    fun `getPokemonDetailFromLocal should fetch from local`() {
+    fun `getPokemonDetailFromLocal should fetch data from local`() {
         val name = "pikachu"
         val entity = createPokemonDetailMock(name)
 

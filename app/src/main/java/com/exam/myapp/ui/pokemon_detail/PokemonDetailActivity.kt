@@ -1,19 +1,17 @@
 package com.exam.myapp.ui.pokemon_detail
 
 import android.os.Bundle
-import android.util.Log
-import android.view.Gravity
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.exam.myapp.R
-import com.exam.myapp.data.local.room.PokemonEnity
 import com.exam.myapp.databinding.ActivityDetailBinding
 import com.exam.myapp.util.DialogHelper
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
+
 
 class PokemonDetailActivity: DaggerAppCompatActivity()  {
 
@@ -73,7 +71,6 @@ class PokemonDetailActivity: DaggerAppCompatActivity()  {
                 DialogHelper.dismissProgressDialog()
             }
         }
-
     }
 
     public override fun onDestroy() {

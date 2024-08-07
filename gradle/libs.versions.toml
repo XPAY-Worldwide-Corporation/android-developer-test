@@ -22,6 +22,7 @@ lifecycleextensions="2.2.0"
 lifecyclecompiler="2.8.4"
 arch="2.2.0"
 mockitokotlin="4.0.0"
+palette="1.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,6 +33,7 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
 recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 databinding = { group = "androidx.databinding", name = "databinding-runtime", version.ref = "databinding" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
@@ -44,6 +46,7 @@ room-rxjava = { group = "androidx.room", name="room-rxjava3", version.ref = "roo
 room-runtime = { group = "androidx.room", name="room-runtime", version.ref = "room" }
 room-compiler = { group = "androidx.room",  name="room-compiler", version.ref = "room" }
 swiperefreshlayout = { group = "androidx.swiperefreshlayout", name="swiperefreshlayout", version.ref = "swiperefreshlayout" }
+palette = { group = "androidx.palette", name="palette", version.ref = "palette" }
 dagger-runtime = { group = "com.google.dagger", name="dagger", version.ref = "dagger" }
 dagger-android = { group = "com.google.dagger", name="dagger-android", version.ref = "dagger" }
 dagger-androidsupport = { group = "com.google.dagger", name="dagger-android-support", version.ref = "dagger" }
@@ -56,6 +59,7 @@ core-testing = { group = "androidx.arch.core", name="core-testing", version.ref 
 mockito-core = { group = "org.mockito", name="mockito-core", version.ref = "mockito" }
 mockito-inline = { group = "org.mockito", name="mockito-inline", version.ref = "mockito" }
 mockito-kotlin = { group = "org.mockito.kotlin", name="mockito-kotlin", version.ref = "mockitokotlin" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -33,7 +33,15 @@ data class PokemonDetailEntity(
         }
     }
 
-    fun getStatsByName(statName: String): String {
-        return stats.firstOrNull { it.stat.name == statName }?.baseStat.toString()
+    fun getStatsByName(statName: String): Int {
+        return stats.firstOrNull { it.stat.name == statName }?.baseStat!!
+    }
+
+    fun getStatsTextByName(statName: String): String {
+        return stats.firstOrNull { it.stat.name == statName }?.baseStat.toString() + "/270"
+    }
+
+    fun getExperiencePercent(): String {
+        return "$experience/1000"
     }
 }

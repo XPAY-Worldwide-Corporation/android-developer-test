@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/searchview_background"
-            app:queryHint="Search Here"
+            app:queryHint="@string/search_here"
             app:iconifiedByDefault="false"
             android:layout_alignParentTop="true" />
 
@@ -55,7 +55,7 @@
             android:layout_below="@id/searchView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No Results Found"
+            android:text="@string/no_result"
             android:textColor="@color/black"
             android:visibility="@{viewModel.isShowNoResult ? View.VISIBLE : View.GONE}"
             android:textSize="@dimen/sub_header_text_size"
